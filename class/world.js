@@ -41,7 +41,14 @@ class World {
             // A non-food item should be instantiated as an instance of the `Item` class
             // A food item should be instantiated as an instance of the `Food` class
 
-        // Your code here 
+        // Your code here
+        itemList.forEach(ele => {
+            if(ele.isFood){
+                this.rooms[ele.room].items.push(new Food(ele.name, ele.description))
+            }else{
+                this.rooms[ele.room].items.push(new Item(ele.name, ele.description))
+            }
+        })
     }
 }
 

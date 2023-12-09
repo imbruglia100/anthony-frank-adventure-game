@@ -33,29 +33,53 @@ class Player {
         }
     }
 
+    getItemByName(name) {
+        // Retrieves an item from a player's inventory by item name
+        let item;
+        this.items.forEach(ele => {
+            if(ele.name === name){
+                item = ele
+            }
+        })
+        return item ? item : null
+    }
+
     takeItem(itemName) {
         // Picks up an item from the current room into the player's inventory
-
-        // Your code here 
+        this.currentRoom.items.forEach((ele, i) => {
+            if (ele.name.toLowerCase() === itemName.toLowerCase()){
+                this.items.push(ele)
+                this.currentRoom.items.splice(i, 1)
+            }
+        })
     }
 
     dropItem(itemName) {
         // Drops an item the player is holding into their current room
 
-        // Your code here 
+        let item = this.getItemByName(itemName)
+        let index = this.items.indexOf(item)
+
+        if(item){
+            this.currentRoom.items.push(item)
+            this.items.splice(index, 1)
+        }else{
+            console.log("No Item found.\n")
+        }
     }
 
     eatItem(itemName) {
         // Allow the player to eat food items, but not non-food items
+        let food = this.getItemByName(itemName)
 
-        // Your code here 
+        if(food instanceof Food){
+            this.dropItem(itemName)
+        }else{
+            console.log("Cannot eat this!")
+        }
     }
 
-    getItemByName(name) {
-        // Retrieves an item from a player's inventory by item name
 
-        // Your code here 
-    }
 }
 
 module.exports = {
